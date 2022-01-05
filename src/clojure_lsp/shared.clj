@@ -224,7 +224,10 @@
 
   The output representation path matches that of the operating system."
   [path root]
-  (.toString (.relativize (-> root io/file .toPath) (-> path io/file .toPath))))
+  (let [path-obj (-> path io/file .toPath)]
+    (if (.isAbsolute path-obj)
+      (.toString (.relativize (-> root io/file .toPath) path-obj))
+      path)))
 
 (defn join-filepaths
   [& components]
@@ -348,3 +351,7 @@
   [^java.nio.file.Path path
    ^String child]
   (.toFile (.resolve path child)))
+
+(defn normalize-file
+  ^java.io.File [^java.io.File file]
+  (.toFile (.normalize (.toPath file))))

@@ -2,19 +2,45 @@
 
 ## Unreleased
 
+## 2022.01.03-19.46.10
+
+- Catch clj-kondo prints to stdout and log to clojure-lsp log file avoiding crashes on some clients like vscode/Calva.
+
+## 2022.01.03-15.41.19
+
 - General
-  - Bump clj-kondo to `2021.12.02-20211212.204828-17`, supporting auto-load features.
+  - Fix some analysis conflicts regarding `custom-async-lint?` feature introduced on latest release causing outdated analysis and some deadlocks.
+
+- Editor
+  - Fix inline symbol code action regression from previous releases. #678
+  - Fix expand let refactor duplicating variables in some cases. #676
+  - Add completion support to potemkin usages of a namespace.
+  
+- API/CLI
+  - Wait for db cache upsert before end proccess, avoiding the need to re-lint whole classpath on next api/cli runs.
+  - Fix the need to use `:raw? true` on babashka pod usage.
+
+## 2021.12.20-00.36.56
+
+- General
+  - Bump clj-kondo to `2021.12.19`, supporting auto-load configs, improving potemkin support, adding more linters and more.
   - Merge `:cljfmt` settings with `:cljfmt-config-path` if file path exists.
+  - Avoid high CPU and lockup when clj-kondo throws exceptions. #671
+  - Allow absolute paths in deps.edn :local/root #672
+  - Fix clojure-lsp not loading for some mono-repo cases, improving local/root support for polylith projects. #673
+  - Avoid infinite loop because of cyclic dependencies on deps source-path discovery.
+  - Add babashka pod. #555
 
 - Editor
   - Change call hierarchy to return selection range of usage, not function definition.
   - Return `edits` in `codeAction/resolve` responses rather than `commands`. #655
-  - Improve `:linters :clj-kondo :async-custom-lint?` to avoid infinite loops.
+  - Improve `:linters :clj-kondo :async-custom-lint?` to avoid infinite loops and default to `true`.
   - Add new custom LSP feature __Test Tree__, which shows all test hierarchy of a file. #653
   - Improve function name finding to consider other function definition types for some features. #666
+  - Make `textDocument/hover` return the correct range from LSP spec, the element range instead of the element scope range.
 
 - API/CLI
-  - Exit process if any error during classpath lookup.
+  - Exit process if any error during classpath lookup. Opt-out via `:api :exit-on-errors?` flag.
 
 ## 2021.12.01-12.28.16
 

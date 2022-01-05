@@ -93,6 +93,7 @@ You can find all settings and its default values [here](https://github.com/cloju
 | `classpath-config-paths`                | List of extra configurations to load from classpath, for more info, check [Classpath config paths](#classpath-config-paths) section.                                                                                                                                                                                                                                                                                 | `[]`                                             |
 | `cache-path`                            | Where to store the project's analysis cache, used to speed up next `clojure-lsp` startup. A path relative to project root or an absolute path.                                                                                                                                                                                                                                                                       | `.lsp/.cache`                                    |
 | `log-path`                              | A absolute path to a file where clojure-lsp should log.                                                                                                                                                                                                                                                                                                                                                              | A JVM tmp path, usually `/tmp/clojure-lsp.*.out` |
+| `api exit-on-errors?`                   | Whether to exit the clojure-lsp process during api/cli call if any error is found, like classpath scan failure                                                                                                                                                                                                                                                                                                       | `true`                                           |
 
 ### Classpath scan
 
@@ -145,7 +146,7 @@ It has the possible key/values:
   - `:level` with available values: `:off`, `:on` with default value of `:on`
   - `:report-duplicates` which will show all linters of the same symbol instead of showing only the first spot. Available values: `true`, `false` with default value of `true`
   - `ns-exclude-regex` which will exclude the diagnostics/findings for namespaces that match this regex.
-  - `async-custom-lint?`, whether to async lint custom clojure-lsp linters like unused-public-var, improves UI feedback for huge clojure buffers. Experimental, default `false`.
+  - `async-custom-lint?`, whether to async lint custom clojure-lsp linters like unused-public-var, improves UI feedback for huge clojure buffers. Experimental, default `true`.
 
 Example:
 

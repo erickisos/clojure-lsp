@@ -17,6 +17,21 @@
 
 (def clj-kondo-analysis-batch-size 50)
 
+(defmacro catch-kondo-errors [err-hint & body]
+  `(let [err# (java.io.StringWriter.)
+         out# (java.io.StringWriter.)]
+     (try
+       (binding [*err* err#
+                 *out* out#]
+         (let [result# (do ~@body)]
+           (when-not (string/blank? (str err#))
+             (log/warn "Non-fatal error from clj-kondo:" (str err#)))
+           (when-not (string/blank? (str out#))
+             (log/warn "Output from clj-kondo:" (str out#)))
+           result#))
+       (catch Exception e#
+         (log/error e# "Error running clj-kondo on" ~err-hint)))))
+
 (defn entry->normalized-entries [{:keys [bucket] :as element}]
   (cond
     ;; We create two entries here (and maybe more for refer)
@@ -82,13 +97,23 @@
         (f.diagnostic/unused-public-var-lint-for-single-file! file updated-analysis kondo-ctx db)))))
 
 (defn ^:private single-file-custom-lint!
-  [{:keys [analysis] :as kondo-ctx} uri db]
-  (let [filename (-> analysis :var-definitions first :filename)
-        updated-analysis (assoc (:analysis @db) filename (normalize-analysis analysis))]
-    (if (settings/get db [:linters :clj-kondo :async-custom-lint?] false)
-      (async/go
-        (f.diagnostic/unused-public-var-lint-for-single-file-and-publish! filename uri updated-analysis kondo-ctx db))
-      (f.diagnostic/unused-public-var-lint-for-single-file! filename updated-analysis kondo-ctx db))))
+  [{:keys [analysis config] :as kondo-ctx} uri db]
+  (when-not (= :off (get-in config [:linters :clojure-lsp/unused-public-var :level]))
+    (let [filename (-> analysis :var-definitions first :filename)
+          updated-analysis (assoc (:analysis @db) filename (normalize-analysis analysis))]
+      (if (settings/get db [:linters :clj-kondo :async-custom-lint?] true)
+        (async/go-loop [tries 1]
+          (if (>= tries 200)
+            (log/info "Max tries reached when async custom linting" uri)
+            (if (:processing-changes @db)
+              (do
+                (Thread/sleep 50)
+                (recur (inc tries)))
+              (let [new-findings (f.diagnostic/unused-public-var-lint-for-single-file-merging-findings! filename updated-analysis kondo-ctx db)]
+                (swap! db assoc-in [:findings filename] new-findings)
+                (when (not= :unknown (shared/uri->file-type uri))
+                  (f.diagnostic/sync-lint-file! uri db))))))
+        (f.diagnostic/unused-public-var-lint-for-single-file! filename updated-analysis kondo-ctx db)))))
 
 (defn kondo-for-paths [paths db external-analysis-only?]
   (-> {:cache true
@@ -122,12 +147,8 @@
       (with-additional-config (settings/all db))))
 
 (defn run-kondo-on-paths! [paths external-analysis-only? db]
-  (let [err (java.io.StringWriter.)]
-    (binding [*err* err]
-      (let [result (kondo/run! (kondo-for-paths paths db external-analysis-only?))]
-        (when-not (string/blank? (str err))
-          (log/info (str err)))
-        result))))
+  (catch-kondo-errors (str "paths " (string/join ", " paths))
+    (kondo/run! (kondo-for-paths paths db external-analysis-only?))))
 
 (defn run-kondo-on-paths-batch!
   "Run kondo on paths by partitioning the paths, with this we should call
@@ -147,22 +168,12 @@
            (reduce shared/deep-merge)))))
 
 (defn run-kondo-on-reference-filenames! [filenames db]
-  (let [err (java.io.StringWriter.)]
-    (binding [*err* err]
-      (let [result (kondo/run! (kondo-for-reference-filenames filenames db))]
-        (when-not (string/blank? (str err))
-          (log/info (str err)))
-        result))))
+  (catch-kondo-errors (str "files " (string/join ", " filenames))
+    (kondo/run! (kondo-for-reference-filenames filenames db))))
 
 (defn run-kondo-on-text! [text uri db]
-  (let [err (java.io.StringWriter.)]
-    (binding [*err* err]
-      (let [result (with-in-str
-                     text
-                     (kondo/run! (kondo-for-single-file uri db)))]
-        (when-not (string/blank? (str err))
-          (log/error (str err)))
-        result))))
+  (catch-kondo-errors (shared/uri->filename uri)
+    (with-in-str text (kondo/run! (kondo-for-single-file uri db)))))
 
 (defn config-hash
   [project-root]

@@ -11,7 +11,9 @@ jobs:
     name: Build JVM jar and embedded jar
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2.2.0
+        with:
+          fetch-depth: 0
       - name: Prepare java
         uses: actions/setup-java@v1
         with:
@@ -82,6 +84,11 @@ jobs:
         uses: svenstaro/upx-action@v2
         with:
           file: clojure-lsp
+
+      - name: Run babashka pod tests
+        env:
+          CLOJURE_LSP_TEST_ENV: native
+        run: make pod-test
 
       - name: Run integration tests
         run: |
@@ -231,6 +238,11 @@ jobs:
       #   with:
       #     file: clojure-lsp
 
+      - name: Run babashka pod tests
+        env:
+          CLOJURE_LSP_TEST_ENV: native
+        run: make pod-test
+
       - name: Run integration tests
         run: |
           make integration-test
@@ -312,10 +324,13 @@ jobs:
 
   release:
     name: Create Release
+    environment: prod-release
     needs: [build-jvm, linux-amd64, linux-amd64-static, macos, windows]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2.2.0
+        with:
+          fetch-depth: 0
       - name: Get latest tag
         id: latest-tag
         uses: WyriHaximus/github-action-get-previous-tag@v1
@@ -343,7 +358,9 @@ jobs:
     needs: [release]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2.2.0
+        with:
+          fetch-depth: 0
       - name: Get latest tag
         id: latest-tag
         uses: WyriHaximus/github-action-get-previous-tag@v1
