@@ -209,11 +209,15 @@
   
 
 
-  <li class="md-tabs__item">
-    <a href="../api/" class="md-tabs__link">
-      API
-    </a>
-  </li>
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../api/what-is-it/" class="md-tabs__link">
+        Outside editor (API)
+      </a>
+    </li>
+  
 
       
         
@@ -345,7 +349,7 @@
 
   <li class="md-nav__item">
     <a href="../clients/" class="md-nav__link">
-      Clients
+      Clients (Editors)
     </a>
   </li>
 
@@ -466,6 +470,54 @@
     Custom methods
   </a>
   
+    <nav class="md-nav" aria-label="Custom methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-tree" class="md-nav__link">
+    Test tree
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project-tree" class="md-nav__link">
+    Project tree
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-info-raw" class="md-nav__link">
+    Server Info Raw
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-info-log" class="md-nav__link">
+    Server Info Log
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cursor-info-log" class="md-nav__link">
+    Cursor Info Log
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clojuredocs-raw" class="md-nav__link">
+    Clojuredocs raw
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
       </ul>
@@ -517,10 +569,104 @@
 
 
 
+  
+  <li class="md-nav__item md-nav__item--nested">
+    
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+    
+    <label class="md-nav__link" for="nav-4">
+      Outside editor (API)
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="Outside editor (API)" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon"></span>
+        Outside editor (API)
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+
   <li class="md-nav__item">
-    <a href="../api/" class="md-nav__link">
-      API
+    <a href="../api/what-is-it/" class="md-nav__link">
+      What is clojure-lsp API?
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../api/api/" class="md-nav__link">
+      API (JVM)
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../api/cli/" class="md-nav__link">
+      CLI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../api/ci/" class="md-nav__link">
+      CI
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../api/lein-plugin/" class="md-nav__link">
+      Lein plugin
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
+    <a href="../api/bb-pod/" class="md-nav__link">
+      Babashka pod
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -613,6 +759,54 @@
   <a href="#custom-methods" class="md-nav__link">
     Custom methods
   </a>
+  
+    <nav class="md-nav" aria-label="Custom methods">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#test-tree" class="md-nav__link">
+    Test tree
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#project-tree" class="md-nav__link">
+    Project tree
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-info-raw" class="md-nav__link">
+    Server Info Raw
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#server-info-log" class="md-nav__link">
+    Server Info Log
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cursor-info-log" class="md-nav__link">
+    Cursor Info Log
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clojuredocs-raw" class="md-nav__link">
+    Clojuredocs raw
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -743,7 +937,7 @@
 <tr>
 <td>workspace/configuration</td>
 <td></td>
-<td></td>
+<td>We use a more robust settings concept (.lsp/config.edn)</td>
 </tr>
 <tr>
 <td>workspace/didChangeWatchedFiles</td>
@@ -764,6 +958,36 @@
 <td>workspace/applyEdit</td>
 <td>√</td>
 <td>TextDocumentEdit and RenameFile only</td>
+</tr>
+<tr>
+<td>workspace/willRenameFiles</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>workspace/didRenameFiles</td>
+<td>√</td>
+<td></td>
+</tr>
+<tr>
+<td>workspace/willCreateFiles</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>workspace/didCreateFiles</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>workspace/willDeleteFiles</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>workspace/didDeleteFiles</td>
+<td></td>
+<td></td>
 </tr>
 <tr>
 <td>textDocument/didOpen</td>
@@ -822,13 +1046,13 @@
 </tr>
 <tr>
 <td>textDocument/declaration</td>
-<td></td>
-<td></td>
+<td>√</td>
+<td>Show where the symbol was declared on the file, like alias/refer  definitions</td>
 </tr>
 <tr>
 <td>textDocument/definition</td>
 <td>√</td>
-<td>TODO: Find java classes definition</td>
+<td></td>
 </tr>
 <tr>
 <td>textDocument/typeDefinition</td>
@@ -837,8 +1061,8 @@
 </tr>
 <tr>
 <td>textDocument/implementation</td>
-<td></td>
-<td></td>
+<td>√</td>
+<td>Implementation of defprotocols/defmulti showing deftypes and defrecords</td>
 </tr>
 <tr>
 <td>textDocument/references</td>
@@ -917,7 +1141,7 @@
 </tr>
 <tr>
 <td>textDocument/prepareRename</td>
-<td></td>
+<td>√</td>
 <td></td>
 </tr>
 <tr>
@@ -990,7 +1214,7 @@
 <hr />
 <h4 id="more-details">More details<a class="headerlink" href="#more-details" title="Permanent link">#</a></h4>
 <p>Calling <code>executeCommand</code> with the following commands and additional args will notify the client with <code>applyEdit</code>.
-All commands expect the first three args to be <code>[document-uri, line, column]</code> (eg <code>["file:///home/snoe/file.clj", 13, 11]</code>)</p>
+All commands expect the first three args to be <code>[document-uri, line, character]</code> (eg <code>["file:///home/snoe/file.clj", 13, 11]</code>)</p>
 <table>
 <thead>
 <tr>
@@ -1003,8 +1227,8 @@ All commands expect the first three args to be <code>[document-uri, line, column
 <tbody>
 <tr>
 <td>√</td>
-<td>add-import-to-namespace</td>
-<td><code>[document-uri, line, column, import-name]</code></td>
+<td>add-missing-import</td>
+<td><code>[document-uri, line, character, import-name]</code></td>
 <td></td>
 </tr>
 <tr>
@@ -1040,7 +1264,7 @@ All commands expect the first three args to be <code>[document-uri, line, column
 <tr>
 <td>√</td>
 <td>extract-function</td>
-<td><code>[document-uri, line, column, function-name]</code></td>
+<td><code>[document-uri, line, character, function-name]</code></td>
 <td></td>
 </tr>
 <tr>
@@ -1052,13 +1276,13 @@ All commands expect the first three args to be <code>[document-uri, line, column
 <tr>
 <td>√</td>
 <td>introduce-let</td>
-<td><code>[document-uri, line, column, binding-name]</code></td>
+<td><code>[document-uri, line, character, binding-name]</code></td>
 <td></td>
 </tr>
 <tr>
 <td>√</td>
 <td>move-to-let</td>
-<td><code>[document-uri, line, column, binding-name]</code></td>
+<td><code>[document-uri, line, character, binding-name]</code></td>
 <td></td>
 </tr>
 <tr>
@@ -1100,7 +1324,7 @@ All commands expect the first three args to be <code>[document-uri, line, column
 <tr>
 <td>√</td>
 <td>resolve-macro-as</td>
-<td><code>[document-uri, line, column, resolved-full-symbol kondo-config-path]</code></td>
+<td><code>[document-uri, line, character, resolved-full-symbol kondo-config-path]</code></td>
 <td></td>
 </tr>
 <tr>
@@ -1113,40 +1337,77 @@ All commands expect the first three args to be <code>[document-uri, line, column
 </table>
 <p>See Vim client section for an example.</p>
 <p>Emacs provides all those refactorings via <a href="https://emacs-lsp.github.io/lsp-mode/">lsp-mode</a>  with the <code>lsp-clojure-</code> prefix.</p>
-<p>Other clients might provide a higher level interface to <code>workspace/executeCommand</code> you need to pass the path, line and column numbers.</p>
+<p>Other clients might provide a higher level interface to <code>workspace/executeCommand</code> you need to pass the path, line and character numbers.</p>
 <h3 id="custom-methods">Custom methods<a class="headerlink" href="#custom-methods" title="Permanent link">#</a></h3>
 <p><code>clojure-lsp</code> has some custom LSP methods that doesn't follow the protocol but aggregate value as a clojure IDE:</p>
-<table>
-<thead>
-<tr>
-<th>command</th>
-<th>args</th>
-<th>notes</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>clojure/serverInfo/raw</td>
-<td></td>
-<td>Use to retrieve from server the server configuration information</td>
-</tr>
-<tr>
-<td>clojure/serverInfo/log</td>
-<td></td>
-<td>Use to log to user the server configuration information</td>
-</tr>
-<tr>
-<td>clojure/cursorInfo/log</td>
-<td><code>[document-uri, line, column]</code></td>
-<td>Use to log to user the debugging information for the symbol at cursor</td>
-</tr>
-<tr>
-<td>clojure/clojuredocs/raw</td>
-<td><code>[symbol-name, symbol-ns]</code></td>
-<td>Use to retreive any Clojuredocs entry. Will return <code>null</code> if no entry found.</td>
-</tr>
-</tbody>
-</table>
+<h4 id="test-tree">Test tree<a class="headerlink" href="#test-tree" title="Permanent link">#</a></h4>
+<p>Notify client with test tree data to build a UI tree on client side.</p>
+<p>Type: Server Notification</p>
+<p>Capability: <code>experimental.testTree</code></p>
+<p>Method: <code>clojure/textDocument/testTree</code></p>
+<p>Response: <code>TestTreeParams</code></p>
+<ul>
+<li>
+<p><code>TestTreeParams</code>: <code>{:uri string, :tree TestTreeNode}</code></p>
+</li>
+<li>
+<p><code>TestTreeNode</code>: <code>{:name string, name-range: Range, range: Range, :kind TestTreeKind, :children [TestTreeNode]}</code></p>
+</li>
+<li>
+<p><code>TestTreeKind</code>: <code>:namespace 1 | :deftest 2 | :testing 3</code></p>
+</li>
+</ul>
+<h4 id="project-tree">Project tree<a class="headerlink" href="#project-tree" title="Permanent link">#</a></h4>
+<p>Request the project tree showing project source-paths and external dependencies.
+If params is null request the project root nodes, otherwise request the nodes of the passed node.
+The project tree is lazy, so client should request the nodes of a node when user expand it manually.</p>
+<p>Type: Client request with response</p>
+<p>Capability: <code>experimental.projectTree</code></p>
+<p>Method: <code>clojure/workspace/projectTree/nodes</code></p>
+<p>Params: <code>ProjectTreeNodeLeaf</code> | <code>null</code></p>
+<p>Response: <code>ProjectTreeNodeBranch</code></p>
+<ul>
+<li>
+<p><code>ProjectTreeNode</code>: <code>ProjectTreeNodeBranch | ProjectTreeNodeLeaf</code></p>
+</li>
+<li>
+<p><code>ProjectTreeNodeBranch</code>: <code>{:name string, :type ProjectTreeNodeType, :uri string?, :detail string?, :id string?, :nodes [ProjectTreeNode]}</code></p>
+</li>
+<li>
+<p><code>ProjectTreeNodeLeaf</code>: <code>{:name string, :type ProjectTreeNodeType, :id string?, :uri string?, :range Range?, :detail string?, final boolean}</code></p>
+</li>
+<li>
+<p><code>ProjectTreeNodeType</code>: <code>:project 1 | :source-path 2 | :library 3 | :jar 4 | :ns 5 | :class 6 | :function 7 | :variable 8 | :interface 9</code></p>
+</li>
+</ul>
+<h4 id="server-info-raw">Server Info Raw<a class="headerlink" href="#server-info-raw" title="Permanent link">#</a></h4>
+<p>Use to retrieve from server the server configuration information.</p>
+<p>Type: Client request with response</p>
+<p>Capability: none </p>
+<p>Method: <code>clojure/serverInfo/raw</code></p>
+<p>Params: none </p>
+<p>Response: Any</p>
+<h4 id="server-info-log">Server Info Log<a class="headerlink" href="#server-info-log" title="Permanent link">#</a></h4>
+<p>Use to log to client the server configuration information.</p>
+<p>Type: Client request with response</p>
+<p>Capability: none </p>
+<p>Method: <code>clojure/serverInfo/log</code></p>
+<p>Params: none </p>
+<p>Response: none</p>
+<h4 id="cursor-info-log">Cursor Info Log<a class="headerlink" href="#cursor-info-log" title="Permanent link">#</a></h4>
+<p>Use to log to client the debugging information for the symbol at cursor.</p>
+<p>Type: Client request with response</p>
+<p>Capability: none </p>
+<p>Method: <code>clojure/cursorInfo/log</code></p>
+<p>Params: <code>[uri, line, character]</code> </p>
+<p>Response: Any</p>
+<h4 id="clojuredocs-raw">Clojuredocs raw<a class="headerlink" href="#clojuredocs-raw" title="Permanent link">#</a></h4>
+<p>Use to retrieve any Clojuredocs entry. Will return <code>null</code> if no entry found.</p>
+<p>Type: Client request with response</p>
+<p>Capability: none </p>
+<p>Method: <code>clojure/clojuredocs/raw</code></p>
+<p>Params: <code>[symbol-name, symbol-ns]</code></p>
+<p>Response: Any</p>
                 
                   
                     
@@ -1155,7 +1416,7 @@ All commands expect the first three args to be <code>[document-uri, line, column
 <div class="md-source-date">
   <small>
     
-      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">November 17, 2021</span>
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">October 9, 2024</span>
     
   </small>
 </div>
